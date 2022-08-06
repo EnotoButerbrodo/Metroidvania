@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
@@ -15,6 +16,7 @@ public class Movement : MonoBehaviour
     private Rigidbody _rigidbody;
     private Vector3 _moveDirection;
     private float _accelerationTimer;
+    private Vector3 _inputDirection;
 
 
     private void Awake()
@@ -24,22 +26,35 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        var inputDirection = new Vector3(_input.HorizontalAxis, 0, _input.VerticalAxis).normalized;
+        var _inputDirection = new Vector3(_input.HorizontalAxis, 0, _input.VerticalAxis).normalized;
 
-        _accelerationTimer = inputDirection.Equals(Vector3.zero) ? 0 : _accelerationTimer + Time.deltaTime;
+        _accelerationTimer = _inputDirection.Equals(Vector3.zero) ? 0 : _accelerationTimer + Time.deltaTime;
        
-        _moveDirection += inputDirection * GetAcceleration() * _speed * Time.deltaTime;
+        _moveDirection += _inputDirection * GetAcceleration() * _speed * Time.deltaTime;
 
     }
 
     private void FixedUpdate()
     {
         Move();
+        Rotate();
+
+        _moveDirection = Vector3.zero;
     }
+
+    private void Rotate()
+    {
+        if (_moveDirection.Equals(Vector3.zero))
+            return;
+
+        Quaternion toRotation = Quaternion.LookRotation(_moveDirection, transform.up);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 700 * Time.deltaTime);
+    }
+
     private void Move()
     {
         _rigidbody.MovePosition(_rigidbody.position + _moveDirection);
-        _moveDirection = Vector3.zero;
+        
     }
 
     private float GetAcceleration() => 
