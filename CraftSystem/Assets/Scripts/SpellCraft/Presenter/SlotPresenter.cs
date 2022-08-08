@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace SpellCraft
 {
-    public class SlotPresenter: MonoBehaviour
+    public class SlotPresenter : MonoBehaviour
     {
         [SerializeField] private Slot<Entity> _craftSlot;
         [SerializeField] private Image _slotImage;

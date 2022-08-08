@@ -2,8 +2,9 @@
 
 namespace SpellCraft
 { 
-    public class CoreSlot : Slot<Entity>
+    public class CoreSlot : Slot<Core>    
     {
+
     }
 
 }

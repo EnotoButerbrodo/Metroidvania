@@ -348,8 +348,10 @@
 "Assets/Scripts/SpellCraft/Entityes/Core.cs"
 "Assets/Scripts/SpellCraft/Entityes/CoreType.cs"
 "Assets/Scripts/SpellCraft/Entityes/Entity.cs"
+"Assets/Scripts/SpellCraft/Entityes/Fragment.cs"
 "Assets/Scripts/SpellCraft/Presenter/SlotPresenter.cs"
 "Assets/Scripts/SpellCraft/Slot/CoreSlot.cs"
+"Assets/Scripts/SpellCraft/Slot/FragmentSlot.cs"
 "Assets/Scripts/SpellCraft/Slot/Slot.cs"
 -langversion:9.0
 

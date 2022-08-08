@@ -4,25 +4,25 @@ using UnityEngine;
 
 namespace SpellCraft
 {
-    public abstract class Slot<TEntity> : MonoBehaviour
-        where TEntity : class
+    public class Slot<TEntity> : MonoBehaviour
+        where TEntity : Entity
     {
 
         [SerializeField] private TEntity _item;
 
-        public Action<TEntity> SpellPlaced;
-        public Action<TEntity> SpellRemoving;
-        public virtual void Place(TEntity spell)
+        public event Action<TEntity> SpellPlaced;
+        public event Action<TEntity> SpellRemoving;
+        public void Place(TEntity spell)
         {
             _item = spell;
             SpellPlaced?.Invoke(_item);
         }
-        public virtual void Remove()
+        public void Remove()
         {
             SpellRemoving?.Invoke(_item);
             _item = null;
         }
 
-
     }
+
 }

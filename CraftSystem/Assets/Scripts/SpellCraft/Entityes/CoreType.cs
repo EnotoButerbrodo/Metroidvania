@@ -7,7 +7,6 @@ namespace SpellCraft
         Ice,
         Vamprire,
         KineticForce
-
     }
 
 }
