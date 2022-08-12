@@ -32,9 +32,8 @@ namespace NTC.Source.Code.Ecs
         private void AddSystems()
         {
             _systems.
-                    Add(new PlyaerInputSystem()).
-                    Add(new MovementSystem()).
-                    Add(new GravitySystem());
+                    Add(new GetPointScreenSystem()).
+                    Add(new CreatMagicSystem());
                     
         }
 
