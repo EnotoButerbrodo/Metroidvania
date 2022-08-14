@@ -6,12 +6,10 @@ namespace PlayerControllerSpace
 {
     sealed class Player_ThirdCamera : Player
     {
-  
-
         private void Update()
         {
-             LookMouse();
-              GravityPlayer();
+            LookMouse();
+            GravityPlayer();
         }
         private void FixedUpdate()
         {
@@ -20,11 +18,17 @@ namespace PlayerControllerSpace
 
         private void LookMouse()
         {
-                //получение позиции мышки для просчёта вектора поворота
-            float mouseX = Input.GetAxis("Mouse X") * 300f * Time.deltaTime;
-            float mouseY = Input.GetAxis("Mouse Y") * 300f * Time.deltaTime;
-
-            _playerBody.transform.Rotate(Vector3.up * mouseX);
+            var Ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            var Ground = new Plane(Vector3.up,Vector3.zero);
+            var LengthRay = 0f;
+            var pointToLook = new Vector3();
+            if(Ground.Raycast(Ray, out LengthRay))
+            {
+                pointToLook = Ray.GetPoint(LengthRay);
+                Debug.DrawLine(Ray.origin,pointToLook,Color.red);
+            }
+            _playerBody.transform.LookAt(new Vector3
+                (pointToLook.x,_playerBody.transform.position.y,pointToLook.z));
         }
 
         protected override void MovePlayer()
@@ -39,7 +43,9 @@ namespace PlayerControllerSpace
         public override void CreatMagic(Magic _magic, Vector3 point)
         {
             var MagicBullet = Instantiate(_magic,_pointCreatMagic.position,Quaternion.identity);
+            Debug.DrawLine(_pointCreatMagic.position, point,Color.blue);
             point.y = _pointCreatMagic.position.y;
+            Debug.DrawLine(_pointCreatMagic.position, point,Color.black);
             MagicBullet.gameObject.GetComponent<Rigidbody>().velocity = (point - _pointCreatMagic.position).normalized * 30f;
             Destroy(MagicBullet.gameObject,3f);
         }
