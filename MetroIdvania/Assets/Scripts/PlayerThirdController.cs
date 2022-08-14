@@ -18,33 +18,41 @@ sealed class PlayerThirdController : MonoBehaviour
     }
     private void Update()
     {
-        OnMouseDragPosition();
+        //OnMouseDragPosition();
+        PlayerAttack();
+       
+    }
+
+
+    private void PlayerAttack()
+    {
         if(Input.GetAxis("Fire1") == 1)
         {
-            Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance); // переменной записываються координаты мыши по иксу и игрику
-            Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition); 
-            _player.CreatMagic(_magic,objPosition);
-        } else _timeToFire += Time.deltaTime;
+            if(_timeToFire >= _reloadedFire)
+            {
+                _player.CreatMagic(_magic,OnMouseDragPosition());
+                _timeToFire = 0;
+            }
+        } else 
+        {
+             _timeToFire += Time.deltaTime;
+        }
     }
-
-
-    private Vector3 DirectionVectorСalculation()
+    private Vector3 OnMouseDragPosition()
     {
-        Vector3 position = _camera.ScreenToWorldPoint(Input.mousePosition);
-        Debug.Log(position);
-        return position;
-    }
 
-
-    public float distance = 10f;
- 
-    private void OnMouseDragPosition()
-    {
-        Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, distance); // переменной записываються координаты мыши по иксу и игрику
-        Vector3 objPosition = Camera.main.ScreenToWorldPoint(mousePosition); // переменной - объекту присваиваеться переменная с координатами мыши
+        var Ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        var Ground = new Plane(Vector3.up,Vector3.zero);
+        var LengthRay = 0f;
+        var pointToLook = new Vector3();
+        if(Ground.Raycast(Ray, out LengthRay))
+        {
+            pointToLook = Ray.GetPoint(LengthRay);
+            Debug.DrawLine(Ray.origin,pointToLook,Color.red);
+        }
        
        
-        _point.position = objPosition; // и собственно объекту записываються координаты
+        return pointToLook;  
     }
 
 }

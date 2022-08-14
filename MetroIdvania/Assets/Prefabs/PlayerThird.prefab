@@ -421,7 +421,7 @@ Transform:
   m_GameObject: {fileID: 5127585572698024246}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.78, y: 0.25, z: 2.92}
-  m_LocalScale: {x: 1.2, y: 1.8, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7073061488659196628}
@@ -462,7 +462,7 @@ MonoBehaviour:
   PlayerHeight: 3
   GroundDistance: 0.8
   _gravity: -19.62
-  _playerBody: {fileID: 0}
+  _playerBody: {fileID: 7073061488659196628}
   Groundcheck: {fileID: 1767509258}
   GroundMask:
     serializedVersion: 2
@@ -482,4 +482,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _magic: {fileID: 8712640120251273177, guid: 0c7ac47f75f0c53499da7c671e259fc9, type: 3}
   _camera: {fileID: 0}
-  _reloadedFire: 2
+  _point: {fileID: 0}
+  _reloadedFire: 0.3
